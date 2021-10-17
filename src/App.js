@@ -1,58 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useEffect } from "react";
+import { Switch } from "react-router";
+import "./App.scss";
+// import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
+import Home from "./features/home";
+import Login from "./features/auth/login";
+import Register from "./features/auth/register";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import VerifyOTP from "./features/verifyOTP";
+import { useDispatch } from "react-redux";
+import { setTokenFromLocalStorageToReduxStore } from "./utils/auth";
 
-function App() {
+toast.configure({
+  newestOnTop: true,
+  limit: 3,
+});
+
+export default function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTokenFromLocalStorageToReduxStore(dispatch);
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <Switch>
+        <PublicRoute
+          isRestricted={true}
+          path="/login"
+          component={Login}
+          hasLayout={false}
+          exact
+        />
+        <PublicRoute
+          isRestricted={true}
+          path="/register"
+          component={Register}
+          hasLayout={false}
+          exact
+        />
+        <PublicRoute
+          isRestricted={false}
+          path="/verify-otp"
+          component={VerifyOTP}
+          exact
+        />
+        <PublicRoute
+          isRestricted={false}
+          path="/"
+          component={Home}
+          exact
+          hasLayout={true}
+        />
+      </Switch>
+    </>
   );
 }
-
-export default App;

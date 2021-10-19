@@ -15,22 +15,18 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signUpThunk } from "../authSlice";
+import { useForm, Controller } from "react-hook-form";
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-      const formData = new FormData(event.currentTarget);
-      const data = {
-        firstName: formData.get("firstName"),
-        lastName: formData.get("lastName"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-        address: formData.get("address"),
-      };
-
+  const onSubmit = useCallback(
+    (data) => {
       dispatch(signUpThunk(data));
     },
     [dispatch]
@@ -52,58 +48,109 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
+              <Controller
                 name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
+                defaultValue=""
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    autoComplete="fname"
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                    {...field}
+                  />
+                )}
               />
+              {errors.firstName?.type === "required" &&
+                "First name is required"}
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
+              <Controller
                 name="lastName"
-                autoComplete="lname"
+                defaultValue=""
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    autoComplete="lname"
+                    {...field}
+                  />
+                )}
               />
+              {errors.lastName?.type === "required" && "Last name is required"}
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
+              <Controller
                 name="email"
-                autoComplete="email"
+                rules={{ required: true }}
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    autoComplete="email"
+                    {...field}
+                  />
+                )}
               />
+              {errors.email?.type === "required" && "Email is required"}
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
+              <Controller
                 name="password"
-                label="Password"
-                type="password"
-                id="password1"
-                autoComplete="new-password"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    fullWidth
+                    label="Password"
+                    type="password"
+                    id="password1"
+                    autoComplete="new-password"
+                    {...field}
+                  />
+                )}
               />
+              {errors.password?.type === "required" && "Password is required"}
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="address"
-                label="Address"
+              <Controller
                 name="address"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    fullWidth
+                    id="address"
+                    label="Address"
+                    {...field}
+                  />
+                )}
               />
+              {errors.address?.type === "required" && "Address is required"}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel

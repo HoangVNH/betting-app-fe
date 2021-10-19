@@ -1,33 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signIn, signUp } from "../../apis/authApi";
-import { showSuccessToast, showErrorToast } from "../../services/toastService";
+import { signIn, signUp, verifyUser } from "../../apis/authApi";
+import { withToastForError } from "../../utils";
 import { setLocalToken, setLocalRefreshToken } from "../../utils/auth";
 
-export const signInThunk = createAsyncThunk("auth/signIn", async (values) => {
-  try {
-    const {
-      data: { accessToken, refreshToken },
-    } = await signIn(values);
+export const signInThunk = createAsyncThunk(
+  "auth/signIn",
+  withToastForError(
+    async (values) => signIn(values),
+    "Login successfully!",
+    "Something went wrong!"
+  )
+);
 
-    setLocalToken(accessToken);
-    setLocalRefreshToken(refreshToken);
-    showSuccessToast("Login successfully!");
+export const signUpThunk = createAsyncThunk(
+  "auth/signUp",
+  withToastForError(
+    async (values) => signUp(values),
+    "Register successfully!",
+    "Something went wrong!"
+  )
+);
 
-    return { accessToken };
-  } catch (error) {
-    showErrorToast("Something went wrong!");
-  }
-});
-
-export const signUpThunk = createAsyncThunk("auth/signUp", async (values) => {
-  try {
-    await signUp(values);
-
-    showSuccessToast("Register successfully!");
-  } catch (error) {
-    showErrorToast("Something went wrong!");
-  }
-});
+export const verifyOTPThunk = createAsyncThunk(
+  "auth/verifyOTP",
+  withToastForError(
+    async (values) => verifyUser(values),
+    "Verify successfully!",
+    "Something went wrong!"
+  )
+);
 
 const initialState = {
   isLoading: false,
@@ -50,17 +51,18 @@ export const authSlice = createSlice({
   extraReducers: {
     [signInThunk.pending]: (state) => {
       state.isLoading = true;
-      state.isLoggedIn = false;
     },
     [signInThunk.rejected]: (state) => {
       state.isLoading = false;
     },
     [signInThunk.fulfilled]: (state, { payload }) => {
-      const { accessToken } = payload;
+      const { accessToken, refreshToken } = payload;
 
-      state.user.accessToken = accessToken;
       state.isLoading = false;
-      state.isLoggedIn = true;
+      state.user.accessToken = accessToken;
+
+      setLocalToken(accessToken);
+      setLocalRefreshToken(refreshToken);
     },
     [signUpThunk.pending]: (state) => {
       state.isLoading = true;
@@ -71,12 +73,21 @@ export const authSlice = createSlice({
     [signUpThunk.fulfilled]: (state) => {
       state.isLoading = false;
     },
+    [verifyOTPThunk.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [verifyOTPThunk.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [verifyOTPThunk.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
 export const { logout, setTokenFromLocalStorage } = authSlice.actions;
 
-export const selectIsLoadingLogin = (state) => state.auth.isLoading;
+export const selectIsLoading = (state) => state.auth.isLoading;
 export const selectUserData = (state) => state.auth.user.accessToken;
 
 export default authSlice.reducer;

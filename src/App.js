@@ -8,7 +8,7 @@ import Login from "./features/auth/login";
 import Register from "./features/auth/register";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import VerifyOTP from "./features/verifyOTP";
+import VerifyOTP from "./features/auth/verifyOTP";
 import { useDispatch } from "react-redux";
 import { setTokenFromLocalStorageToReduxStore } from "./utils/auth";
 
@@ -42,9 +42,10 @@ export default function App() {
           exact
         />
         <PublicRoute
-          isRestricted={false}
+          isRestricted={true}
           path="/verify-otp"
           component={VerifyOTP}
+          hasLayout={false}
           exact
         />
         <PublicRoute

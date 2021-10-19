@@ -15,18 +15,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { signInThunk } from "../authSlice";
 import { useDispatch } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
 
 const SignIn = () => {
   const dispatch = useDispatch();
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-    };
-
+  const onSubmit = (data) => {
     dispatch(signInThunk(data));
   };
 
@@ -46,30 +45,62 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <Controller
             name="email"
-            autoComplete="off"
-            autoFocus
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Email is required",
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "Email is not valid",
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                fullWidth
+                required
+                id="email"
+                label="Email Address"
+                autoComplete="off"
+                autoFocus
+                {...field}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          {errors.email && <p>{errors.email.message}</p>}
+          <Controller
             name="password"
-            label="Password"
-            type="password"
-            id="password1"
-            autoComplete="new-password"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Password is required" }}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                fullWidth
+                required
+                label="Password"
+                type="password"
+                id="password1"
+                autoComplete="new-password"
+                {...field}
+              />
+            )}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
+            sx={{
+              width: "100%",
+            }}
           />
           <Button
             type="submit"

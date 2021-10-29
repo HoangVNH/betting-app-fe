@@ -30,7 +30,7 @@ const SignIn = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="sm">
       <Box
         sx={{
           marginTop: 8,

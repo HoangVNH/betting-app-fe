@@ -3,7 +3,6 @@ import {
   AppBar,
   Toolbar,
   Button,
-  Typography,
   Link,
   Tooltip,
   IconButton,
@@ -106,9 +105,18 @@ const Header = () => {
       sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
     >
       <Toolbar sx={{ flexWrap: "wrap" }}>
-        <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+        <Link
+          component={RouterLink}
+          to="/"
+          underline="none"
+          sx={{
+            flexGrow: 1,
+            color: 'inherit'
+          }}
+          noWrap
+        >
           Betting App
-        </Typography>
+        </Link>
         {isLoggedIn ? (
           renderMenu()
         ) : (

@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import VerifyOTP from "./features/auth/verifyOTP";
 import { useDispatch } from "react-redux";
 import { setTokenFromLocalStorageToReduxStore } from "./utils/auth";
+import ProductDetail from "./features/product/ProductDetail";
 
 toast.configure({
   newestOnTop: true,
@@ -48,12 +49,11 @@ export default function App() {
           hasLayout={false}
           exact
         />
+        <PublicRoute path="/" component={Home} exact />
         <PublicRoute
-          isRestricted={false}
-          path="/"
-          component={Home}
+          path="/product/:productId"
+          component={ProductDetail}
           exact
-          hasLayout={true}
         />
       </Switch>
     </>

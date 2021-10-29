@@ -7,8 +7,8 @@ import Layout from "../Layout";
 
 const PublicRoute = ({
   component: Component,
-  isRestricted,
-  hasLayout = false,
+  isRestricted = false,
+  hasLayout = true,
   ...rest
 }) => {
   const accessToken = useSelector(selectUserData);

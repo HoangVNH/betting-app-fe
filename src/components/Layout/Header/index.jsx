@@ -11,14 +11,58 @@ import {
   MenuItem,
   Divider,
   ListItemIcon,
+  InputBase
 } from "@mui/material";
+import { styled, alpha } from '@mui/material/styles';
 import { Link as RouterLink } from "react-router-dom";
 import { clearLocalToken, getLocalToken } from "../../../utils/auth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SearchIcon from '@mui/icons-material/Search';
 import { Logout } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../../features/auth/authSlice";
 import { showSuccessToast } from "../../../services/toastService";
+import { Box } from "@mui/system";
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -104,23 +148,40 @@ const Header = () => {
       elevation={0}
       sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
     >
-      <Toolbar sx={{ flexWrap: "wrap" }}>
-        <Link
-          component={RouterLink}
-          to="/"
-          underline="none"
-          sx={{
-            flexGrow: 1,
-            color: 'inherit'
-          }}
-          noWrap
-        >
-          Betting App
-        </Link>
+      <Toolbar sx={{ flexWrap: "wrap", justifyContent: "space-between", alignItems: 'center' }}>
+        <Box component="div" sx={{
+          display: 'flex',
+          alignItems: "center"
+        }}>
+          <Link
+            component={RouterLink}
+            to="/"
+            underline="none"
+            sx={{
+              // flexGrow: 1,
+              color: 'inherit'
+            }}
+            noWrap
+          >
+            Betting App
+          </Link>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+        </Box>
         {isLoggedIn ? (
           renderMenu()
         ) : (
-          <>
+          <Box component="div" sx={{
+            display: 'flex',
+            alignItems: "center"
+          }}>
             <Link
               component={RouterLink}
               variant="body2"
@@ -138,7 +199,7 @@ const Header = () => {
             >
               Register
             </Button>
-          </>
+          </Box>
         )}
       </Toolbar>
     </AppBar>

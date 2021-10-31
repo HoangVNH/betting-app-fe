@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Card,
   CardActions,
@@ -9,10 +10,12 @@ import {
   Button,
   Container,
 } from "@mui/material";
+import { getProducts } from "../../features/product/productSlice";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const Home = () => {
+  const products = useSelector(getProducts);
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
       <Grid container spacing={4}>

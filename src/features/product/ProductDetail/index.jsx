@@ -1,5 +1,6 @@
 import './styles.scss';
-
+import { useSelector } from "react-redux";
+import { selectProductDetailData } from "../productSlice";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Typography,
@@ -8,6 +9,7 @@ import {
 } from "@mui/material";
 
 const ProductDetail = () => {
+  const ProductDetail = useSelector(selectProductDetailData);
   const [product] = useState({
     id: 1,
     name: "Jordan 1 Mid Light Smoke Grey",

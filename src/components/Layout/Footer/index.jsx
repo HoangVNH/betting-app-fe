@@ -4,13 +4,21 @@ import { Link as RouterLink } from "react-router-dom";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link component={RouterLink} color="inherit" to="/">
+    <Typography
+      variant="body2"
+      sx={{
+        fontSize: '12px',
+        lineHeight: '16px',
+        textAlign: 'center',
+        color: '#707A8A',
+        py: 3
+      }}
+    >
+      <Link component={RouterLink} color="inherit" to="/" underline="none">
         Betting App
-      </Link>{" "}
+      </Link>
+      {" © "}
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -30,7 +38,6 @@ function Footer() {
       component="footer"
     >
       <Container>
-        <Typography variant="body1">My sticky footer</Typography>
         <Copyright />
       </Container>
     </Box>

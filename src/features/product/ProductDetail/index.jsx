@@ -1,14 +1,19 @@
 import './styles.scss';
-import { useSelector } from "react-redux";
-import { selectProductDetailData } from "../productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetailById, selectProductDetailData } from "../productSlice";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Typography,
   Container,
   Box
 } from "@mui/material";
+import { useParams } from 'react-router-dom';
 
 const ProductDetail = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { productId } = params;
+
   const ProductDetail = useSelector(selectProductDetailData);
   const [product] = useState({
     id: 1,
@@ -49,6 +54,10 @@ const ProductDetail = () => {
   useEffect(() => {
     activeThumbRef.current.children[bigImageIndex].className = 'active';
   }, [bigImageIndex]);
+
+  useEffect(() => {
+    dispatch(getProductDetailById(productId));
+  }, [dispatch, productId])
 
   return (
     <Container sx={{ marginTop: '24px' }} maxWidth="lg">

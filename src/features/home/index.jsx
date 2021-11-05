@@ -1,22 +1,29 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   Container,
 } from "@mui/material";
 import ProductCard from "../../components/ProductCard";
-import { getProducts } from "../../features/product/productSlice";
+import { selectProductData, getProducts } from "../product/productSlice";
+import { Link as RouterLink } from "react-router-dom";
+import { keys } from "@mui/system";
 
 // const cards = [1];
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const cards = [];
 
 const Home = () => {
-  const products = useSelector(getProducts);
+  const dispatch = useDispatch();
+  const products = useSelector(selectProductData);
+  console.log("products: ", products);
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [])
   return (
     <Container sx={{ py: 8 }} maxWidth="lg">
       <Grid container spacing={4}>
-        {cards.map((card) => (
-          <Grid item key={card} xs={12} sm={6} md={3}>
+        {products.map((product) => (
+          <Grid item key={product} xs={12} sm={6} md={3}>
             <ProductCard />
           </Grid>
         ))}

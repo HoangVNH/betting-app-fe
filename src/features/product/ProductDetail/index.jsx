@@ -14,7 +14,8 @@ const ProductDetail = () => {
   const params = useParams();
   const { productId } = params;
 
-  const ProductDetail = useSelector(selectProductDetailData);
+  const productDetail = useSelector(selectProductDetailData);
+  console.log("ProductDetail: ", ProductDetail);
   const [product] = useState({
     id: 1,
     name: "Jordan 1 Mid Light Smoke Grey",
@@ -70,7 +71,7 @@ const ProductDetail = () => {
               fontSize: '24px',
               marginBottom: '0.5em'
             }} >
-            {product.name}
+            {productDetail.name}
           </Typography>
           <Typography
             component="h1"

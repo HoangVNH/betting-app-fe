@@ -11,7 +11,7 @@ export const getProductDetailById = createAsyncThunk(
 )
 
 export const getProducts = createAsyncThunk(
-  "products",
+  "product",
   async () => {
     const response = await getAllProducts();
 

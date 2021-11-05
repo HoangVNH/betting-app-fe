@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from "react-router-dom";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
   return (
     <Link
       component={RouterLink}

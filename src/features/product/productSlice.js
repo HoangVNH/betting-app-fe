@@ -11,7 +11,7 @@ export const getProductDetailById = createAsyncThunk(
 )
 
 export const getProducts = createAsyncThunk(
-  "product",
+  "product/getProductList",
   async () => {
     const response = await getAllProducts();
 
@@ -22,7 +22,7 @@ export const getProducts = createAsyncThunk(
 const initialState = {
   isLoading: false,
   productDetail: {},
-  products: {},
+  products: [],
   list: {
     data: {
       results: []

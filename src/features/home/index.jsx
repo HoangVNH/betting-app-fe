@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -16,13 +16,13 @@ const Home = () => {
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch])
-  
+
   return (
     <Container sx={{ py: 8 }} maxWidth="lg">
       <Grid container spacing={4}>
         {products.map((product, index) => (
           <Grid item key={index} xs={12} sm={6} md={3}>
-            <ProductCard />
+            <ProductCard prd={product} />
           </Grid>
         ))}
       </Grid>

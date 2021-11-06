@@ -11,11 +11,11 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ prd }) => {
   return (
     <Link
       component={RouterLink}
-      to="/product/1"
+      to={`product/${prd.id}`}
       underline="none"
     >
       <Card
@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => {
           component="img"
           alt="green iguana"
           height="155"
-          image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
+          image={prd.imagePath}
           sx={{
             cursor: 'pointer',
             borderRadius: '4px',
@@ -57,7 +57,7 @@ const ProductCard = ({ product }) => {
               fontWeight: 500,
               color: 'rgb(30, 35, 41)'
             }}>
-            Product name
+            {prd.name}
           </Typography>
           <Box
             sx={{
@@ -80,7 +80,7 @@ const ProductCard = ({ product }) => {
                 fontWeight: 500
               }}
             >
-              VND 8.750.000
+              VND {Number(prd.Auctions[0]?.initPrice).toLocaleString('en-US')}
             </Typography>
           </Box>
           <Box
@@ -125,7 +125,7 @@ const ProductCard = ({ product }) => {
                 fontWeight: 500
               }}
             >
-              VND 12.500.000
+              VND {Number(prd.Auctions[0]?.initPrice).toLocaleString('en-US')}
             </Typography>
           </Box>
           <Box
@@ -143,7 +143,7 @@ const ProductCard = ({ product }) => {
               Posted
             </Typography>
             <Typography component="div">
-              31/10/2021
+              {prd.Auctions[0]?.createdAt.slice(0, 10)}
             </Typography>
           </Box>
           <Box
@@ -162,7 +162,7 @@ const ProductCard = ({ product }) => {
             <Typography
               component="div"
             >
-              31/10/2021
+              {prd.Auctions[0]?.endedAt.slice(0, 10)}
             </Typography>
           </Box>
           <Box
@@ -171,7 +171,7 @@ const ProductCard = ({ product }) => {
               alignItems: 'center',
               justifyContent: 'space-between'
             }}>
-            <Typography
+            {/* <Typography
               component="div"
             >
               Bidded
@@ -181,7 +181,7 @@ const ProductCard = ({ product }) => {
               className="product-card__text"
             >
               5
-            </Typography>
+            </Typography> */}
           </Box>
         </CardContent>
       </Card >

@@ -100,7 +100,7 @@ const ProductCard = ({ prd }) => {
               component="div"
               className="product-card__text"
             >
-              Bidder Name
+              {prd.Auctions[0]?.BiddingLogs[0]?.User.firstName} {prd.Auctions[0]?.BiddingLogs[0]?.User.lastName}
             </Typography>
           </Box>
           <Box

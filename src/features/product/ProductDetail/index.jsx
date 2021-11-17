@@ -5,7 +5,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Typography,
   Container,
-  Box
+  Box,
+  Grid,
+  CardContent
 } from "@mui/material";
 import { useParams } from 'react-router-dom';
 
@@ -15,7 +17,7 @@ const ProductDetail = () => {
   const { productId } = params;
 
   const productDetail = useSelector(selectProductDetailData);
-  console.log("ProductDetail: ", ProductDetail);
+  console.log("ProductDetail: ", productDetail);
   const [product] = useState({
     id: 1,
     name: "Jordan 1 Mid Light Smoke Grey",
@@ -61,57 +63,200 @@ const ProductDetail = () => {
   }, [dispatch, productId])
 
   return (
-    <Container sx={{ marginTop: '24px' }} maxWidth="lg">
-      <Box component="section">
-        <Box component="div">
-          <Typography
-            component="h1"
-            variant="h5"
-            sx={{
-              fontSize: '24px',
-              marginBottom: '0.5em'
-            }} >
-            {productDetail.name}
-          </Typography>
-          <Typography
-            component="h1"
-            variant="h5"
-            sx={{
-              fontSize: '18px'
-            }}>
-            Category
-          </Typography>
-        </Box>
-        <Box
-          component="div"
-          sx={{
-            display: 'flex',
-            flexDirection: "column"
-          }}>
-          <div
-            className="big-img"
-          >
-            <img
-              src={product.images[bigImageIndex]?.imagePath}
-              alt="random"
-            />
-          </div>
-          <div className="thumb" ref={activeThumbRef}>
-            {
-              product.images.map(({ imagePath, imageName }, index) => (
-                <img
-                  src={imagePath}
-                  alt={imageName}
-                  key={index}
-                  onClick={() => handleChangeTab(index)}
-                />
-              ))
-            }
-          </div>
-        </Box>
-      </Box>
-
-    </Container>
+    <div>
+      {
+        productDetail && (
+          <Container sx={{ marginTop: '24px' }} maxWidth="lg">
+            <Box component="section">
+              <Box component="div">
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  sx={{
+                    fontSize: '24px',
+                    marginBottom: '0.5em'
+                  }} >
+                  {productDetail.name}
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  sx={{
+                    fontSize: '18px'
+                  }}>
+                  Category
+                </Typography>
+              </Box>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Box
+                    xs={6}
+                    component="div"
+                    sx={{
+                      display: 'flex',
+                      flexDirection: "column"
+                    }}>
+                    <div
+                      className="big-img"
+                    >
+                      <img
+                        src={productDetail?.Auctions[bigImageIndex]?.imagePath}
+                        alt="random"
+                      />
+                    </div>
+                    <div className="thumb" ref={activeThumbRef}>
+                      {
+                        productDetail?.Auctions.map(({ imagePath, imageName }, index) => (
+                          <img
+                            src={imagePath}
+                            alt={imageName}
+                            key={index}
+                            onClick={() => handleChangeTab(index)}
+                          />
+                        ))
+                      }
+                    </div>
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <CardContent>
+                    <Typography
+                      component="div"
+                      sx={{
+                        margin: '12px 0 12px',
+                        minWidth: '0px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        flex: '1 1 0%',
+                        width: '250px',
+                        fontSize: '16px',
+                        fontWeight: 500,
+                        color: 'rgb(30, 35, 41)'
+                      }}>
+                      nsdcns dcn
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '4px'
+                      }}>
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        Current bid
+                      </Typography>
+                      <Typography
+                        component="div"
+                        sx={{
+                          color: '#1e2329',
+                          fontSize: '16px',
+                          fontWeight: 500
+                        }}
+                      >
+                        VND {Number(productDetail?.Auctions[0]?.initPrice).toLocaleString('en-US')}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '4px'
+                      }}>
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        Bidder
+                      </Typography>
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        {productDetail?.Auctions[0]?.BiddingLogs[0]?.User.firstName} {productDetail?.Auctions[0]?.BiddingLogs[0]?.User.lastName}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '4px'
+                      }}
+                    >
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        Price
+                      </Typography>
+                      <Typography
+                        component="div"
+                        sx={{
+                          color: '#1e2329',
+                          fontSize: '16px',
+                          fontWeight: 500
+                        }}
+                      >
+                        VND {Number(productDetail?.Auctions[0]?.initPrice).toLocaleString('en-US')}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '4px'
+                      }}
+                    >
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        Posted
+                      </Typography>
+                      <Typography component="div">
+                        {productDetail.Auctions[0]?.createdAt.slice(0, 10)}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '4px'
+                      }}>
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        Ends in
+                      </Typography>
+                      <Typography
+                        component="div"
+                      >
+                        {productDetail?.Auctions[0]?.endedAt.slice(0, 10)}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                      }}>
+                    </Box>
+                  </CardContent>
+                </Grid>
+              </Grid>
+            </Box>
+          </Container>
+        )
+      }
+    </div>
   );
 };
 

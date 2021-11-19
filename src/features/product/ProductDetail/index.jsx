@@ -76,16 +76,16 @@ const ProductDetail = () => {
                     fontSize: '24px',
                     marginBottom: '0.5em'
                   }} >
-                  {productDetail.name}
+                  {productDetail.Products[0]?.name}
                 </Typography>
-                <Typography
+                {/* <Typography
                   component="h1"
                   variant="h5"
                   sx={{
                     fontSize: '18px'
                   }}>
                   Category
-                </Typography>
+                </Typography> */}
               </Box>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
@@ -100,16 +100,16 @@ const ProductDetail = () => {
                       className="big-img"
                     >
                       <img
-                        src={productDetail?.Auctions[bigImageIndex]?.imagePath}
+                        src={productDetail?.Products[0]?.ProductSubImages[bigImageIndex]?.imagePath}
                         alt="random"
                       />
                     </div>
                     <div className="thumb" ref={activeThumbRef}>
                       {
-                        productDetail?.Auctions.map(({ imagePath, imageName }, index) => (
+                        productDetail?.Products[0]?.ProductSubImages.map(({ imagePath, name }, index) => (
                           <img
                             src={imagePath}
-                            alt={imageName}
+                            alt={name}
                             key={index}
                             onClick={() => handleChangeTab(index)}
                           />
@@ -120,22 +120,30 @@ const ProductDetail = () => {
                 </Grid>
                 <Grid item xs={6}>
                   <CardContent>
-                    <Typography
-                      component="div"
+                    <Box
                       sx={{
-                        margin: '12px 0 12px',
-                        minWidth: '0px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        flex: '1 1 0%',
-                        width: '250px',
-                        fontSize: '16px',
-                        fontWeight: 500,
-                        color: 'rgb(30, 35, 41)'
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '4px'
                       }}>
-                      nsdcns dcn
-                    </Typography>
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        Category
+                      </Typography>
+                      <Typography
+                        component="div"
+                        sx={{
+                          color: '#1e2329',
+                          fontSize: '16px',
+                          fontWeight: 500
+                        }}
+                      >
+                        {productDetail?.name}
+                      </Typography>
+                    </Box>
                     <Box
                       sx={{
                         display: 'flex',
@@ -157,7 +165,7 @@ const ProductDetail = () => {
                           fontWeight: 500
                         }}
                       >
-                        VND {Number(productDetail?.Auctions[0]?.initPrice).toLocaleString('en-US')}
+                        {Number(productDetail?.Products[0]?.Auctions[0]?.initPrice).toLocaleString('en-US')} VND
                       </Typography>
                     </Box>
                     <Box
@@ -177,7 +185,7 @@ const ProductDetail = () => {
                         component="div"
                         className="product-card__text"
                       >
-                        {productDetail?.Auctions[0]?.BiddingLogs[0]?.User.firstName} {productDetail?.Auctions[0]?.BiddingLogs[0]?.User.lastName}
+                        {productDetail?.Products[0]?.Auctions[0]?.BiddingLogs[0]?.User.firstName} {productDetail?.Products[0]?.Auctions[0]?.BiddingLogs[0]?.User.lastName}
                       </Typography>
                     </Box>
                     <Box
@@ -202,7 +210,7 @@ const ProductDetail = () => {
                           fontWeight: 500
                         }}
                       >
-                        VND {Number(productDetail?.Auctions[0]?.initPrice).toLocaleString('en-US')}
+                        {Number(productDetail?.Products[0]?.Auctions[0]?.initPrice).toLocaleString('en-US')} VND
                       </Typography>
                     </Box>
                     <Box
@@ -220,7 +228,7 @@ const ProductDetail = () => {
                         Posted
                       </Typography>
                       <Typography component="div">
-                        {productDetail.Auctions[0]?.createdAt.slice(0, 10)}
+                        {productDetail.Products[0]?.Auctions[0]?.createdAt.slice(0, 10)}
                       </Typography>
                     </Box>
                     <Box
@@ -239,7 +247,7 @@ const ProductDetail = () => {
                       <Typography
                         component="div"
                       >
-                        {productDetail?.Auctions[0]?.endedAt.slice(0, 10)}
+                        {productDetail?.Products[0]?.Auctions[0]?.endedAt.slice(0, 10)}
                       </Typography>
                     </Box>
                     <Box
@@ -249,7 +257,21 @@ const ProductDetail = () => {
                         justifyContent: 'space-between'
                       }}>
                     </Box>
+                    <Typography
+                      component="div"
+                      className="product-card__text"
+                    >
+                      Description
+                    </Typography>
+                    <Typography
+                      component="div"
+                    >
+                      {productDetail?.Products[0]?.ProductDescriptions[0]?.description}
+                    </Typography>
                   </CardContent>
+
+
+
                 </Grid>
               </Grid>
             </Box>

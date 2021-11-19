@@ -21,7 +21,43 @@ export const getProducts = createAsyncThunk(
 
 const initialState = {
   isLoading: false,
-  productDetail: {},
+  productDetail: {
+    Products: [
+      {
+        Auctions: [
+          {
+            initPrice: '',
+            endedAt: '',
+            auctioneerId: '',
+            binPrice: null,
+            createdAt: '',
+            BiddingLogs: [
+              {
+                User: [
+                  {
+                    firstName: '',
+                    lastName: ''
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        ProductSubImages: [
+          {
+            name: '',
+            imagePath: ''
+          }
+        ],
+        ProductDescriptions: [
+          {
+            description: ''
+          }
+        ]
+      }
+    ]
+
+  },
   products: [],
   list: {
     data: {

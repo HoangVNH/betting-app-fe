@@ -150,6 +150,31 @@ const ProductDetail = () => {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         marginBottom: '4px'
+                      }}
+                    >
+                      <Typography
+                        component="div"
+                        className="product-card__text"
+                      >
+                        Price
+                      </Typography>
+                      <Typography
+                        component="div"
+                        sx={{
+                          color: '#1e2329',
+                          fontSize: '16px',
+                          fontWeight: 500
+                        }}
+                      >
+                        {Number(productDetail?.Products[0]?.Auctions[0]?.initPrice).toLocaleString('en-US')} VND
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: '4px'
                       }}>
                       <Typography
                         component="div"
@@ -200,31 +225,6 @@ const ProductDetail = () => {
                         component="div"
                         className="product-card__text"
                       >
-                        Price
-                      </Typography>
-                      <Typography
-                        component="div"
-                        sx={{
-                          color: '#1e2329',
-                          fontSize: '16px',
-                          fontWeight: 500
-                        }}
-                      >
-                        {Number(productDetail?.Products[0]?.Auctions[0]?.initPrice).toLocaleString('en-US')} VND
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginBottom: '4px'
-                      }}
-                    >
-                      <Typography
-                        component="div"
-                        className="product-card__text"
-                      >
                         Posted
                       </Typography>
                       <Typography component="div">
@@ -247,7 +247,7 @@ const ProductDetail = () => {
                       <Typography
                         component="div"
                       >
-                        {productDetail?.Products[0]?.Auctions[0]?.endedAt.slice(0, 10)}
+                        {productDetail?.Products[0]?.Auctions[0]?.endedAt?.slice(0, 10)}
                       </Typography>
                     </Box>
                     <Box

@@ -31,6 +31,7 @@ const initialState = {
             auctioneerId: '',
             binPrice: null,
             createdAt: '',
+            endedAt: '',
             BiddingLogs: [
               {
                 User: [
@@ -58,7 +59,40 @@ const initialState = {
     ]
 
   },
-  products: [],
+  products: [
+    {
+      Auctions: [
+        {
+          initPrice: '',
+          endedAt: '',
+          auctioneerId: '',
+          binPrice: null,
+          createdAt: '',
+          BiddingLogs: [
+            {
+              User: [
+                {
+                  firstName: '',
+                  lastName: ''
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      ProductSubImages: [
+        {
+          name: '',
+          imagePath: ''
+        }
+      ],
+      ProductDescriptions: [
+        {
+          description: ''
+        }
+      ]
+    }
+  ],
   list: {
     data: {
       results: []

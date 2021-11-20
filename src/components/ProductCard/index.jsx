@@ -65,6 +65,31 @@ const ProductCard = ({ prd }) => {
               alignItems: 'center',
               justifyContent: 'space-between',
               marginBottom: '4px'
+            }}
+          >
+            <Typography
+              component="div"
+              className="product-card__text"
+            >
+              Price
+            </Typography>
+            <Typography
+              component="div"
+              sx={{
+                color: '#1e2329',
+                fontSize: '16px',
+                fontWeight: 500
+              }}
+            >
+              VND {Number(prd.Auctions[0]?.initPrice).toLocaleString('en-US')}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '4px'
             }}>
             <Typography
               component="div"
@@ -115,31 +140,6 @@ const ProductCard = ({ prd }) => {
               component="div"
               className="product-card__text"
             >
-              Price
-            </Typography>
-            <Typography
-              component="div"
-              sx={{
-                color: '#1e2329',
-                fontSize: '16px',
-                fontWeight: 500
-              }}
-            >
-              VND {Number(prd.Auctions[0]?.initPrice).toLocaleString('en-US')}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '4px'
-            }}
-          >
-            <Typography
-              component="div"
-              className="product-card__text"
-            >
               Posted
             </Typography>
             <Typography component="div">
@@ -162,7 +162,7 @@ const ProductCard = ({ prd }) => {
             <Typography
               component="div"
             >
-              {prd.Auctions[0]?.endedAt.slice(0, 10)}
+              {prd.Auctions[0]?.endedAt?.slice(0, 10)}
             </Typography>
           </Box>
           <Box
